@@ -1,19 +1,22 @@
 ; Create the ListView with one column:
-Gui, Add, ListView, -Multi -ReadOnly gMyListView, Server|User
+Gui, Add, ListView, w380 h580 -Multi -ReadOnly gMyListView, Server|User|ServerIP
 Gui, Add, Button, Hidden Default, Default
 
 ; Gather a list of file names from a folder and put them into the ListView:
-Loop Read, C:\Downloads\servers.lst
+Loop Read, C:\Downloads\servers.all.lst
 {
 	;LV_Add("", A_LoopReadLine)
 	ConnInfo := StrSplit(A_LoopReadLine, "@")
-	LV_Add("", ConnInfo[2], ConnInfo[1])
+	LV_Add("", ConnInfo[3], ConnInfo[1], ConnInfo[2])
 }
 
 LV_ModifyCol()  ; Auto-size each column to fit its contents.
+;LV_ModifyCol(2, 100)
+LV_ModifyCol(3, 0)
+LV_ModifyCol(1, "Sort")
 
 ; Display the window and return. The script will be notified whenever the user double clicks a row.
-Gui, Show
+Gui, Show, w400 h600
 Return
 
 MyListView:
@@ -23,10 +26,9 @@ if A_GuiEvent = DoubleClick
 	; ToolTip You double-clicked row number %A_EventInfo%. Text: "%RowText%"
 	LV_GetText(ServerText, LV_GetNext(0, "Focused"), 1)
 	LV_GetText(UserText, LV_GetNext(0, "Focused"), 2)
-	Run %A_WinDir%\System32\bash.exe -c "ssh %UserText%@%ServerText%"
-	;WinSetTitle, C:\Windows\System32\bash.exe, , "%UserText%@%ServerText%"
-	WinWaitActive, C:\Windows\System32\bash.exe
-	WinSetTitle "%UserText%@%ServerText%"
+	LV_GetText(IPText, LV_GetNext(0, "Focused"), 3)
+	Run %A_WinDir%\System32\bash.exe -c "ssh %UserText%@%IPText%"
+	WinSetTitle, C:\Windows\System32\bash.exe, , "%UserText%@%IPText%"
 	WinClose
 }
 Return
@@ -37,10 +39,9 @@ if FocusedControl <> SysListview321
 	Return
 LV_GetText(ServerText, LV_GetNext(0, "Focused"), 1)
 LV_GetText(UserText, LV_GetNext(0, "Focused"), 2)
-Run %A_WinDir%\System32\bash.exe -c "ssh %UserText%@%ServerText%"
-;WinSetTitle, C:\Windows\System32\bash.exe, , "%UserText%@%ServerText%"
-WinWaitActive, C:\Windows\System32\bash.exe
-WinSetTitle "%UserText%@%ServerText%"
+LV_GetText(IPText, LV_GetNext(0, "Focused"), 3)
+Run %A_WinDir%\System32\bash.exe -c "ssh %UserText%@%IPText%"
+WinSetTitle, C:\Windows\System32\bash.exe, , "%UserText%@%IPText%"
 WinClose
 Return
 
