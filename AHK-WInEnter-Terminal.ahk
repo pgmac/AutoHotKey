@@ -7,5 +7,5 @@ Return
 Return
 
 #\::
-  Run, %A_MyDocuments%\AHK-MyDocsList.ahk,, Hide
+  Run, %A_MyDocuments%\GitHub\AutoHotKey\AHK-MyServersList.ahk,, Hide
 Return
