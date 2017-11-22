@@ -3,7 +3,7 @@ Gui, Add, ListView, w380 h580 -Multi -ReadOnly gMyListView, Server|User|ServerIP
 Gui, Add, Button, Hidden Default, Default
 
 ; Gather a list of file names from a folder and put them into the ListView:
-Loop Read, C:\Downloads\servers.all.lst
+Loop Read, %A_MyDocuments%\servers.all.lst
 {
 	;LV_Add("", A_LoopReadLine)
 	ConnInfo := StrSplit(A_LoopReadLine, "@")
