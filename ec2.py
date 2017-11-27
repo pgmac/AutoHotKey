@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 
+''' Will display a list of AWS EC2 instances suitable for use in my AutoHotKey servers script '''
 import os
+
 
 def instance_tag(instance_obj, tag_name="Name"):
     ''' Get a tag from the specified instance '''
@@ -9,17 +11,22 @@ def instance_tag(instance_obj, tag_name="Name"):
             return tag['Value']
     else:
         #return("[noname]")
-        return(instance_obj['PrivateIpAddress'])
+        return instance_obj['PrivateIpAddress']
+
 
 def display_host(host_dets, sep="@", num_keys=3):
+    ''' Display the host entry to stdout '''
     print("{}{}{}{}{}".format(host_dets['user'], sep, host_dets['host'], sep, host_dets['desc']), end="")
     if num_keys > 3:
         print("{}{}".format(sep, host_dets['key-pair']), end="")
     print("\n", end="")
-    
+
 
 def describe_aws():
+    ''' Get list of AWS EC2 instances '''
     import boto3
+
+    _hosts = []
     ec2 = boto3.client('ec2')
     response = ec2.describe_instances()
 
@@ -49,11 +56,15 @@ def describe_aws():
                         showit['key-pair'] = instance_tag(instance, 'key-name')
                     except KeyError:
                         showit['key-pair'] = "[nokey]"
-                    display_host(showit, "@", 4)
+                    _hosts.append(showit)
+                    #display_host(showit, "@", 4)
                     #print("{}@{}@{}".format(os.environ['USER'], instance['PrivateIpAddress'], instance_tag(instance, "Name")))
-                
+    return _hosts
+
+
 def describe_static():
-    hosts = [
+    ''' Build a list of static server entries '''
+    _hosts = [
         {'user': 'pmacdonnell', 'host': 'ansible', 'desc': 'ansible control server'},
         {'user': 'paul', 'host': '192.168.10.178', 'desc': 'paul-cs'},
         {'user': 'admin', 'host': '192.168.10.1', 'desc': 'FW-01'},
@@ -61,10 +72,13 @@ def describe_static():
         {'user': 'paul', 'host': '172.22.22.7', 'desc': 'micro'},
         {'user': 'paul', 'host': '172.22.22.245', 'desc': 'marvin'}
     ]
-    for host in hosts:
-        display_host(host)
+    return _hosts
 
 
 if __name__ == '__main__':
-    describe_aws()
-    describe_static()
+    hosts = describe_aws()
+    for host in describe_static():
+        hosts.append(host)
+
+    for host in hosts:
+        display_host(host)
