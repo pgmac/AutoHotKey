@@ -69,6 +69,17 @@ def describe_static():
         {'user': 'paul', 'host': '192.168.10.178', 'desc': 'paul-cs'},
         {'user': 'admin', 'host': '192.168.10.1', 'desc': 'FW-01'},
         {'user': 'admin', 'host': '192.168.10.2', 'desc': 'FW-02'},
+        {'user': 'csadmin', 'host': '192.168.10.6', 'desc': 'BNE-OPENVPN'},
+        {'user': 'pi', 'host': '192.168.10.211', 'desc': 'RPI-01'},
+        {'user': 'pi', 'host': '192.168.10.212', 'desc': 'RPI-02'},
+        {'user': 'pi', 'host': '192.168.10.213', 'desc': 'RPI-03'},
+        {'user': 'pi', 'host': '192.168.10.214', 'desc': 'RPI-04'},
+        {'user': 'pi', 'host': '192.168.10.215', 'desc': 'RPI-05'},
+        {'user': 'pi', 'host': '192.168.10.216', 'desc': 'RPI-06'},
+        {'user': 'pi', 'host': '192.168.10.217', 'desc': 'RPI-07'},
+        {'user': 'pi', 'host': '192.168.10.218', 'desc': 'RPI-08'},
+        {'user': 'pi', 'host': '192.168.10.219', 'desc': 'RPI-09'},
+        {'user': 'pi', 'host': '192.168.10.220', 'desc': 'RPI-10'},
         {'user': 'paul', 'host': '172.22.22.7', 'desc': 'micro'},
         {'user': 'paul', 'host': '172.22.22.245', 'desc': 'marvin'}
     ]
